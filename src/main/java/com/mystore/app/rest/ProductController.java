@@ -60,15 +60,49 @@ public class ProductController {
     }
 
     // TODO: API to search products by name
+    @GetMapping("/search")
+    public ResponseEntity<List<Product>> getbyname(@RequestParam String name){
+
+    	List <Product> prods=productService.searchProductsByName(name);
+
+    	if(prods.isEmpty()) {
+    		return ResponseEntity.noContent().build();
+    		}
+    	
+		return ResponseEntity.ok(prods);
+    	
+    }
 
 
     // TODO: API to filter products by category
+    @GetMapping("/filter/category")
+    public ResponseEntity<List<Product>> getbycatname(@RequestParam String category){
+
+    	List <Product> prods=productService.searchCatByName(category);
+
+    	if(prods.isEmpty()) {
+    		return ResponseEntity.noContent().build();
+    		}
+    	
+		return ResponseEntity.ok(prods);
+    	
+    }
 
 
     // TODO: API to filter products by price range
+    @GetMapping("/filter/price")
+    public ResponseEntity<List<Product>> filterbyPrice(@RequestParam Double minPrice,@RequestParam Double maxPrice){
+    	List<Product> prods=productService.filterbyprice(minPrice, maxPrice);
+    	return ResponseEntity.ok(prods);
+    }
 
 
     // TODO: API to filter products by stock quantity range
+    @GetMapping("/filter/stock")
+    public ResponseEntity<List<Product>> getbystock(@RequestParam Integer minStock,@RequestParam Integer maxStock){
+    	List<Product> prods=productService.filterbystock(minStock, maxStock);
+    	return ResponseEntity.ok(prods);
+    }
 
 
 }
